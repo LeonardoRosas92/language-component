@@ -1,0 +1,29 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<dom-module id="language-component">
+  <template>
+      <paper-button data-lang="es" on-tap="changeLanguage">Español</paper-button>
+      <paper-button data-lang="en" on-tap="changeLanguage">English</paper-button>
+  </template>
+
+  <script>
+    class LanguageComponent extends Polymer.Element {
+      static get is() { return 'language-component'; }
+      static get properties() {
+        return {
+          lang: {
+            type: String,
+            value: 'en',
+            notify: true  
+          }
+        };
+      }
+      changeLanguage(event){
+        this.set('lang',event.target.getAttribute('data-lang'));
+      }
+    }
+
+    window.customElements.define(LanguageComponent.is, LanguageComponent);
+  </script>
+</dom-module>
