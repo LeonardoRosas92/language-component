@@ -1,10 +1,27 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
 
-<link rel="import" href="bower_components/paper-button/paper-button.html">
+
 <dom-module id="language-component">
   <template>
-      <paper-button data-lang="es" on-tap="changeLanguage">Español</paper-button>
-      <paper-button data-lang="en" on-tap="changeLanguage">English</paper-button>
+      <iron-ajax 
+        id="json"
+        handle-as="json"
+        on-response="_getLanguage"
+        on-error="_errorResponse"
+        debounce-duration="300">
+      </iron-ajax>
+      <div hidden="[[hiddenMenu]]">
+        <paper-dropdown-menu label="Idioma" no-animations on-selected-item-changed="_langSelected">
+            <paper-listbox slot="dropdown-content" selected="1" attr-for-selected="data-lang">
+              <paper-item data-lang="es">Español</paper-item>
+              <paper-item data-lang="en">English</paper-item>
+            </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
   </template>
 
   <script>
@@ -12,18 +29,73 @@
       static get is() { return 'language-component'; }
       static get properties() {
         return {
+          source:{
+            type: String,
+            value:'',
+            observer:'_requestLanguage'
+          },
           lang: {
             type: String,
             value: 'en',
-            notify: true  
+            observer:'_langChanged'
+          },
+          locales:{
+            type: Object,
+            value: {}
+          },
+          hiddenMenu:{
+            type: Boolean,
+            value: false,
           }
         };
       }
-      changeLanguage(event){
-        this.set('lang',event.target.getAttribute('data-lang'));
-      }
-    }
 
+      _langChanged(){
+        this._requestLanguage();
+      }
+
+      _langSelected(event){
+        const paperItem = event.detail.value;
+        if(paperItem){
+          const languageKey=paperItem.getAttribute('data-lang');
+          this.set('lang',languageKey);
+        }
+      }
+
+      _requestLanguage() {
+                this.$.json.url = `${this.source}/${this.lang}.json`;
+                this.$.json.generateRequest();
+      }
+
+      _getLanguage(){
+        const response = this.$.json.lastResponse;
+        this.set(['locales',this.lang],response);
+        if(this.locales[this.lang]){
+          this.dispatchEvent(new CustomEvent('language-changed',{
+            bubbles: false,
+            composed:false,
+            detail:{
+              lang: this.lang,
+              data: this.locales[this.lang]
+            }
+          }));
+        }
+      }
+
+      _errorResponse(){
+        const response = this.$.json.lastResponse;
+        this.dispatchEvent(new CustomEvent('language-request-error',{
+          bubbles: false,
+          composed: false,
+          detail:{
+            lang: this.lang,
+            data: this.locales,
+            error: error
+          }
+        }));
+      }
+
+    }
     window.customElements.define(LanguageComponent.is, LanguageComponent);
   </script>
 </dom-module>

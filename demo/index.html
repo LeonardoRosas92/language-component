@@ -11,7 +11,8 @@
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../language-component.html">
-
+    <link rel="import" href="../../paper-toast/paper-toast.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
       </style>
@@ -22,8 +23,34 @@
       <h3>Basic language-component demo</h3>
       <demo-snippet>
         <template>
-          <language-component></language-component>
+          <h2 id="saludo">Hola Mundo!</h2>
+          <paper-button data-lang="es" onclick="changeLanguageEs()">Español</paper-button>
+          <paper-button data-lang="en" onclick="changeLanguageEn()">English</paper-button>
+          <language-component source="locales" lang="es"></language-component>
+          <paper-toast class="fit-bottom"></paper-toast>
         </template>
+        <script>
+            let element =  document.querySelector('language-component')
+                element.addEventListener('language-changed', event => {
+                const toast = document.querySelector('paper-toast');
+                const data = event.detail;
+                toast.text = `Idioma seleccionado: ${data.lang}`;
+                const element = document.querySelector('#saludo');
+                element.innerHTML=data.data.title;
+                toast.show();
+            });
+            function changeLanguageEs(){
+              
+              let element =  document.querySelector('language-component');
+              element.lang="es";
+              console.log(element.lang);
+            }
+            function changeLanguageEn(){
+              let element =  document.querySelector('language-component');
+              element.lang="en";
+              console.log(element.lang);
+            }
+        </script>
       </demo-snippet>
     </div>
   </body>
