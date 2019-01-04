@@ -1,3 +1,12 @@
 {
-    "title": "¡Hola mundo !"
+    "label": "Registro",
+    "title": "Hola Mundo!",
+    "sesion": "Iniciar Sesion",
+    "user": "Nombre de usuario",
+    "password": "Contraseña",
+    "confirmPassword":"Confirme contraseña",
+    "name": "Nombre completo",
+    "register": "Registrar",
+    "signIn":"¿Aun no tienes cuenta? Crea una!"
+
 }

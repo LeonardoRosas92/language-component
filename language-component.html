@@ -72,7 +72,7 @@
         this.set(['locales',this.lang],response);
         if(this.locales[this.lang]){
           this.dispatchEvent(new CustomEvent('language-changed',{
-            bubbles: false,
+            bubbles: false, 
             composed:false,
             detail:{
               lang: this.lang,
