@@ -81,7 +81,7 @@
           }));
         }
       }
-
+  
       _errorResponse(){
         const response = this.$.json.lastResponse;
         this.dispatchEvent(new CustomEvent('language-request-error',{
@@ -90,7 +90,7 @@
           detail:{
             lang: this.lang,
             data: this.locales,
-            error: error
+            error: response
           }
         }));
       }
