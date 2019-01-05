@@ -6,6 +6,12 @@
     "password":"Password",
     "confirmPassword":"Confirm password",
     "name": "Name",
+    "lastName": "Lastname",
+    "age": "Age",
     "register": "Register",
-    "signIn": "No account? Create one!"
+    "signIn": "No account? Create one!",
+    "account":"Do you have an account? Click",
+    "here":"Here",
+    "data":"User Data",
+    "logout":"Logout"
 }
