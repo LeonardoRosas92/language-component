@@ -1,0 +1,17 @@
+{
+    "label": "Registro",
+    "title": "Hola Mundo!",
+    "sesion": "Iniciar sesíon",
+    "user": "Nombre de usuario",
+    "password": "Contraseña",
+    "confirmPassword":"Confirme contraseña",
+    "name": "Nombres",
+    "lastName": "Apellidos",
+    "age": "Edad",
+    "register": "Registrar",
+    "signIn":"¿Aun no tienes cuenta? Crea una!",
+    "account":"¿Tienes cuenta? Da click",
+    "here":"Aqui",
+    "data":"Datos de Usuario",
+    "logout":"Cerrar sesíon"
+}

@@ -13,39 +13,32 @@
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
+    <test-fixture id="basic">
       <template>
-        <language-component></language-component>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <language-component prop1="new-prop1"></language-component>
+        <language-component lang="es" source="locales"></language-component>
       </template>
     </test-fixture>
 
     <script>
-      suite('language-component', () => {
-
-        test('instantiating the element with default properties works', () => {
-          const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'language-component');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello language-component!');
+      suite('language-component source', () => {
+        test('Language En', done => {
+            const element = fixture('basic');
+            element.addEventListener('language-changed', event => {
+                assert.strictEqual('en', event.detail.lang);
+                done();
+            });
+            element.set('lang', 'en');
         });
-
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
+        test('Language Es', done => {
+            const element = fixture('basic');
+            element.addEventListener('language-changed', event => {
+                assert.strictEqual('es', event.detail.lang);
+                done();
+            });
+            element.set('lang', 'es');
         });
+    });
 
-      });
     </script>
 
   </body>
